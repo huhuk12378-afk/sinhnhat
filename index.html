@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="nghichxiu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>14/3 Surprise</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+background:#ffd6e7;
+font-family: "Comic Sans MS", cursive;
+text-align:center;
+}
+
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+border:none;
+border-radius:20px;
+background:#ff8fb1;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+h1{
+color:#ff4f87;
+}
+
+/* hearts */
+
+.heart{
+position:absolute;
+color:#ff7aa8;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-10vh);}
+}
+
+/* cake */
+
+.cake{
+font-size:120px;
+}
+
+/* falling photos */
+
+.photo{
+position:absolute;
+width:120px;
+border-radius:10px;
+animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-200px);}
+100%{transform:translateY(110vh);}
+}
+
+/* sparkle */
+
+.sparkle{
+position:absolute;
+color:white;
+font-size:20px;
+animation:twinkle 1s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.3;}
+to{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgmusic" loop>
+<source src="nhacnen.mp3" type="audio/mpeg">
+</audio>
+
+<div id="screen1" class="screen">
+<h1>Anh bíe có nhớ emmm khônggg?</h1>
+
+<div>
+<button onclick="yesClick()">Có</button>
+<button id="noBtn">Không</button>
+</div>
+</div>
+
+
+<div id="screen2" class="screen" style="display:none">
+<h1>yẹttt sơooooo!!!Tất nhiênnn là phải nhứo rùiii hẹ hẹ iem cũng nhớ a bíe lắmmmm 😭😭 emm muốnnnn đi chơiii quáaa miss u</h1>
+<button onclick="next1()">a diu rét đi mở bất ngờ chưaaa</button>
+</div>
+
+
+<div id="screen3" class="screen" style="display:none">
+<div class="cake">🎂</div>
+<h2>Nhắm mắt và thổi nến nhaaa</h2>
+<h1 id="countdown"></h1>
+</div>
+
+
+
+<div id="screen4" class="screen" style="display:none">
+
+<div id="letter">
+<span id="handwriting"></span>
+</div>
+
+</div>
+<script>
+
+
+    function handwritingEffect(){
+
+let text=`happy valentine's dayyyyyyy💕nhân ngày va lung tung rấttt rấttt thánk kiu a bíe đã xuất hiện trong đời iem nhaa, chời ơi siêu vuii luônn, lần đầu e được đi chơi đêm nè, đi musicbox, đi ăn từa lưaaaa nữaaa, thật sự là iem ít khi ra ngoài chơi lắm vì chả ai đi cùng nhưng mà từ khi cóa a bíe em đã cóa người đi chơi cùng nèee, siu cute và rất vuii nữaaaa 💖 đây cũng là lần đầu em tạo code này áaaa nên hơi 6677 anh xemm tạm nhaaa 🤞🫶🫶사랑해
+`;
+
+let i=0;
+
+function write(){
+
+if(i<text.length){
+
+document.getElementById("handwriting").innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(write,70);
+
+}
+
+}
+
+write();
+
+}
+function showMessage(){
+
+document.getElementById("screen3").style.display="none";
+document.getElementById("screen4").style.display="flex";
+
+handwritingEffect();
+fallPhotos();
+
+}
+// hearts
+
+function createHeart(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=Math.random()*20+10+"px";
+heart.style.animationDuration=Math.random()*3+3+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+}
+
+setInterval(createHeart,300);
+
+
+// run away button
+
+let noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",()=>{
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*80+"vw";
+noBtn.style.top=Math.random()*80+"vh";
+});
+
+
+// yes click
+
+function yesClick(){
+
+document.getElementById("screen1").style.display="none";
+document.getElementById("screen2").style.display="flex";
+
+let music = document.getElementById("bgmusic");
+music.volume = 0.4;
+music.play();
+
+}
+
+
+// next
+
+function next1(){
+document.getElementById("screen2").style.display="none";
+document.getElementById("screen3").style.display="flex";
+
+let count=5;
+
+let timer=setInterval(()=>{
+document.getElementById("countdown").innerText=count;
+
+count--;
+
+if(count<0){
+clearInterval(timer);
+showMessage();
+}
+
+},1000);
+}
+
+
+
+
+// falling photos
+
+function fallPhotos(){
+
+let images=[
+"1.jpg",
+"2.jpg",
+"3.jpg",
+"4.jpg",
+"5.jpg",
+"6.jpg"
+];
+
+setInterval(()=>{
+
+let img=document.createElement("img");
+img.src=images[Math.floor(Math.random()*images.length)];
+img.className="photo";
+img.style.left=Math.random()*90+"vw";
+img.style.animationDuration=Math.random()*3+4+"s";
+
+document.body.appendChild(img);
+
+setTimeout(()=>img.remove(),7000);
+
+},500);
+
+
+// sparkle
+
+setInterval(()=>{
+
+let s=document.createElement("div");
+s.className="sparkle";
+s.innerHTML="✨";
+
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+
+document.body.appendChild(s);
+
+setTimeout(()=>s.remove(),1000);
+
+},200);
+
+}
+
+</script>
+
+</body>
+</html>
